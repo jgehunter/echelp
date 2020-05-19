@@ -1,14 +1,10 @@
 import pytest
-from .. import echelp
+from echelp import echelp
 
 class TestCircuits:
 
-	def test_CircuitObjectCreated():
-		testObject = electricalCircuit()
-		assert isinstance(testObject, electricalCircuit)
-
-
-def test_test():
-	assert 1 == 1
+	def test_CircuitObjectCreated(self):
+		testObject = echelp.electricalCircuit()
+		assert isinstance(testObject, echelp.electricalCircuit)
 
 
