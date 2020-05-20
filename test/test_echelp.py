@@ -21,3 +21,7 @@ class TestCircuits:
 
 		testCircuit = electricalCircuit(name = "Test", parameters = exampleCharacteristics)
 		assert testCircuit.parameters == exampleCharacteristics
+
+	def test_ExceptionIfGetCharacteristicsNoName(self):
+		testCircuit = electricalCircuit()
+		assert pytest.raises(Exception)
