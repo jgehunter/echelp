@@ -10,8 +10,11 @@ circuitDictionary = {
 
 
 if __name__ == "__main__":
+    print("Hello")
+    val = input("What kind of circuit are you designing?\n")
     testCircuit = electricalCircuit(
-        circuitDictionary=circuitDictionary, name="SallenKeyLowPass")
+        circuitDictionary=circuitDictionary,
+        name=val)
     testCircuit.setParameters()
     testCircuit.setEquations()
     testCircuit.getValues()

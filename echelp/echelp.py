@@ -95,7 +95,6 @@ class electricalCircuit():
                 newVariables.append(variable)
 
         solution = solve(newSystem, newVariables)
-        print(type(solution))
 
         for variable in newVariables:
             print(f"The value of {variable} is {solution[variable]}.")
