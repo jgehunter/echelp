@@ -11,3 +11,13 @@ class TestCircuits:
 		testString = "This is a test circuit."
 		testCircuit = electricalCircuit(name = testString)
 		assert testCircuit.name == testString, "Expected %r but received %r" % testString % testCircuit.name
+
+	def test_PassCircuitCharacteristics(self):
+		exampleCharacteristics = {
+									"R1": 10,
+									"R2": 20,
+									"C1": 10,
+		}
+
+		testCircuit = electricalCircuit(name = "Test", parameters = exampleCharacteristics)
+		assert testCircuit.parameters == exampleCharacteristics
