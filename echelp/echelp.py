@@ -1,10 +1,12 @@
-from sympy import *
+from sympy import symbols
+from sympy.solvers import solve
+from sympy.parsing.sympy_parser import parse_expr
 
 circuitDictionary = {
     "SallenKeyLowPass": {
         "Unknowns": 4,
         "Parameters": ["RA", "RB", "F", "R", "C"],
-        "Equations": ["3-(RA+RB)/RA-1.4142", "F-1/(2*PI*R*C)"]
+        "Equations": ["3-(RA+RB)/RA-1.4142", "F-1/(2*pi*R*C)"]
     }
 }
 
@@ -36,3 +38,19 @@ class electricalCircuit():
             for key in self.circuitDictionary.keys():
                 if self.name == key:
                     self.parameters = self.circuitDictionary[key]["Parameters"]
+                    self.equations = self.circuitDictionary[key]["Equations"]
+
+        variables = ""
+        for parameter in self.parameters:
+            variables += parameter + " "
+
+        variables = symbols(variables)
+        listVariables = []
+        for variable in variables:
+            listVariables.append(variable)
+
+        print(listVariables)
+        equationList = []
+        for equation in self.equations:
+        	equationList.append(parse_expr(equation))
+        print(equationList)
