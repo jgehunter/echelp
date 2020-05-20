@@ -1,3 +1,5 @@
+from sympy import *
+
 circuitDictionary = {
     "SallenKeyLowPass": {
         "Unknowns": 4,
@@ -9,7 +11,7 @@ circuitDictionary = {
 
 class electricalCircuit():
 
-    def __init__(self, name=None, parameters=None, circuitDictionary=None, ** kwargs):
+    def __init__(self, name=None, parameters=None, circuitDictionary=None, **kwargs):
         self.name = name
         self.parameters = parameters
         self.circuitDictionary = circuitDictionary
@@ -17,6 +19,20 @@ class electricalCircuit():
             setattr(self, key, kwargs[key])
             print(key)
 
-    def getParameters(self):
-        if self.name is None:
+    def setCircuit(self):
+        """Function that calculates the missing parameter values.
+
+        This function asks the user for the necessary parameters to set
+        and calculates the remaining parameters of the circuit.
+
+        """
+        if self.name is not None:
             raise Exception("Electrical Circuit name not specified.")
+
+    def setParameters(self):
+        """Function that calculates parameters based on circuit name."""
+
+        if self.name is not None:
+            for key in self.circuitDictionary.keys():
+                if self.name == key:
+                    self.parameters = self.circuitDictionary[key]["Parameters"]

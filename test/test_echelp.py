@@ -42,3 +42,17 @@ class TestCircuits:
         }
         testCircuit = electricalCircuit(circuitDictionary=circuitDictionary)
         assert testCircuit.circuitDictionary == circuitDictionary
+
+    def test_ParametersSetFromName(self):
+        circuitDictionary = {
+            "SallenKeyLowPass": {
+                "Unknowns": 4,
+                "Parameters": ["RA", "RB", "F", "R", "C"],
+                "Equations": ["3-(RA+RB)/RA-1.4142", "F-1/(2*PI*R*C)"]
+            }
+        }
+        testCircuit = electricalCircuit(
+                name="SallenKeyLowPass", circuitDictionary=circuitDictionary)
+        testCircuit.setParameters()
+        assert testCircuit.parameters == circuitDictionary[
+            "SallenKeyLowPass"]["Parameters"]
