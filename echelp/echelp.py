@@ -1,5 +1,4 @@
-from sympy import symbols
-from sympy.solvers import solve
+from sympy import solve, symbols
 from sympy.parsing.sympy_parser import parse_expr
 
 circuitDictionary = {
@@ -38,7 +37,6 @@ class electricalCircuit():
             for key in self.circuitDictionary.keys():
                 if self.name == key:
                     self.parameters = self.circuitDictionary[key]["Parameters"]
-                    self.equations = self.circuitDictionary[key]["Equations"]
 
         variables = ""
         for parameter in self.parameters:
@@ -48,9 +46,56 @@ class electricalCircuit():
         listVariables = []
         for variable in variables:
             listVariables.append(variable)
-
+        self.variables = listVariables
         print(listVariables)
-        equationList = []
-        for equation in self.equations:
-        	equationList.append(parse_expr(equation))
-        print(equationList)
+
+    def setEquations(self):
+        """Function that calculates equations based on circuit name."""
+
+        if self.name is not None:
+            for key in self.circuitDictionary.keys():
+                if self.name == key:
+                    self.equations = self.circuitDictionary[key]["Equations"]
+
+            equationList = []
+            for equation in self.equations:
+                equationList.append(parse_expr(equation))
+            self.system = equationList
+            print(equationList)
+
+    def getValues(self):
+        """Function that calculates values for the unknowns"""
+
+        numberUnknowns = len(self.variables) - len(self.system)
+        unknownsFixed = [0] * len(self.variables)
+        listSubs = []
+        while numberUnknowns > 0:
+            print("The unknown variables are:")
+            for idx, variable in enumerate(self.variables):
+                if unknownsFixed[idx] == 0:
+                    print(variable)
+            val = input("Which variable do you want to fix?\n")
+            chosenVar = symbols(val)
+            for idx, variable in enumerate(self.variables):
+                if chosenVar == variable:
+                    unknownsFixed[idx] = 1
+                    val2 = input("What value do you want to give it?\n")
+                    val2 = float(val2)
+                    listSubs.append((variable, val2))
+                    numberUnknowns = numberUnknowns - 1
+
+        newSystem = []
+        for equation in self.system:
+            equation = equation.subs(listSubs)
+            newSystem.append(equation)
+
+        newVariables = []
+        for idx, variable in enumerate(self.variables):
+            if unknownsFixed[idx] == 0:
+                newVariables.append(variable)
+
+        solution = solve(newSystem, newVariables)
+        print(type(solution))
+
+        for variable in newVariables:
+            print(f"The value of {variable} is {solution[variable]}.")

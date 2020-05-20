@@ -9,7 +9,9 @@ circuitDictionary = {
 }
 
 
-if __name__ ==  "__main__":
-    testCircuit = electricalCircuit(circuitDictionary=circuitDictionary, name="SallenKeyLowPass")
+if __name__ == "__main__":
+    testCircuit = electricalCircuit(
+        circuitDictionary=circuitDictionary, name="SallenKeyLowPass")
     testCircuit.setParameters()
-
+    testCircuit.setEquations()
+    testCircuit.getValues()
